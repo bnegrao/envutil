@@ -26,9 +26,7 @@ public class EnvUtil {
      * Returns a map with all the environment variables available in the runtime process
      */
     private static Map<String, String> loadEnvironment() {
-        HashMap<String, String> environment = new HashMap<>();
-        environment.putAll(System.getenv());
-        return environment;
+        return new HashMap<>(System.getenv());
     }
 
     private EnvUtil(){}
@@ -100,11 +98,11 @@ public class EnvUtil {
 
     /**
      * Returns a string showing all the variable/value pairs currently stored in the internal map
-     * formatted as "VARIABLE_NAME:VARIABLE_VALUE\n";
+     * formatted as "VARIABLE_NAME : VARIABLE_VALUE\n";
      */
     public static String printEnv() {
         StringBuilder envStr = new StringBuilder();
-        envMap.forEach((k, v) -> envStr.append(k + ":" + v + "\n"));
+        envMap.forEach((k, v) -> envStr.append(k + " : " + v + "\n"));
         return envStr.toString();
     }
 }
