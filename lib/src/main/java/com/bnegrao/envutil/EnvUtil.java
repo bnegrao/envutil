@@ -1,5 +1,6 @@
 package com.bnegrao.envutil;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -98,11 +99,19 @@ public class EnvUtil {
 
     /**
      * Returns a string showing all the variable/value pairs currently stored in the internal map
-     * formatted as "VARIABLE_NAME : VARIABLE_VALUE\n";
+     * formatted as "VARIABLE_NAME<i>separator</i>VARIABLE_VALUE\n";
+     * @param separator string used to separate the variable name from the variable value
      */
-    public static String printEnv() {
+    public static String printEnv(String separator) {
         StringBuilder envStr = new StringBuilder();
-        envMap.forEach((k, v) -> envStr.append(k + " : " + v + "\n"));
+        envMap.forEach((k, v) -> envStr.append(k + separator + v + "\n"));
         return envStr.toString();
+    }
+
+    /**
+     * @return an unmodifiable copy of the internal envMap
+     */
+    public static Map<String,String> getEnvMap() {
+        return Collections.unmodifiableMap(envMap);
     }
 }

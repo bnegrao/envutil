@@ -3,6 +3,8 @@ package com.bnegrao.envutil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class EnvUtilTest {
@@ -93,8 +95,23 @@ class EnvUtilTest {
 
     @Test
     void assertPrintEnvReturnsCorrectNumberOfLines() {
-        String[] lines = EnvUtil.printEnv().split("\n");
+        String[] lines = EnvUtil.printEnv("\t").split("\n");
 
         assertEquals(System.getenv().size(), lines.length);
+    }
+
+    @Test
+    void assertPrintEnvReturnsAllVariables() {
+        String separator = "  :  ";
+        String printEnvResult = EnvUtil.printEnv(separator);
+
+        EnvUtil.getEnvMap().forEach((varName, value) ->
+            assertTrue(printEnvResult.contains(varName + separator + value + "\n")));
+    }
+
+    @Test
+    void assertGetEnvMapReturnsAnUnmodifiableMap() {
+        Map<String, String> getEnvMapResult = EnvUtil.getEnvMap();
+        assertThrows(UnsupportedOperationException.class, () -> getEnvMapResult.put("aVar", "aValue"));
     }
 }
